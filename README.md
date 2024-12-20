@@ -15,8 +15,7 @@ A real-time odds comparison tool that helps users identify value bets by analyzi
 
 ## Technical Stack
 
-- Frontend: React with TypeScript
+- Frontend: React with JavaScript
 - Styling: Tailwind CSS
-- UI Components: shadcn/ui
 - Backend: Node.js/Express
 - Data: The Odds API
