@@ -26,15 +26,21 @@ const CATEGORIES = [
     label: "Tennis",
   },
   {
-    key: "basketball_nba",
-    label: "NBA",
+    key: "basketball",
+    label: "Basketball",
+    subs: [
+      { key: "basketball_nba", label: "NBA" },
+    ],
   },
 ];
 
 const SportSelector = ({ selected, onChange }) => {
   const [openSub, setOpenSub] = useState(null);
 
-  const handleClick = (cat) => {
+  const getAllKeys = (cat) =>
+    cat.subs ? cat.subs.map((s) => s.key).join(",") : cat.key;
+
+  const handleCatClick = (cat) => {
     if (cat.subs) {
       setOpenSub(openSub === cat.key ? null : cat.key);
     } else {
@@ -44,7 +50,10 @@ const SportSelector = ({ selected, onChange }) => {
   };
 
   const isActive = (cat) => {
-    if (cat.subs) return cat.subs.some((s) => s.key === selected);
+    if (cat.subs) {
+      const allKeys = getAllKeys(cat);
+      return selected === allKeys || cat.subs.some((s) => s.key === selected);
+    }
     return cat.key === selected;
   };
 
@@ -53,11 +62,9 @@ const SportSelector = ({ selected, onChange }) => {
       {CATEGORIES.map((cat) => (
         <div key={cat.key} className="relative">
           <button
-            onClick={() => handleClick(cat)}
+            onClick={() => handleCatClick(cat)}
             className={`flex items-center gap-1 px-3 py-1.5 text-sm rounded transition-colors ${
-              isActive(cat)
-                ? "text-white"
-                : "text-slate-400 hover:text-slate-200"
+              isActive(cat) ? "text-white" : "text-slate-400 hover:text-slate-200"
             }`}
           >
             {cat.label}
@@ -82,8 +89,21 @@ const SportSelector = ({ selected, onChange }) => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.12 }}
-                className="absolute top-full mt-2 left-0 z-20 bg-[#161f35] border border-slate-700/50 rounded-lg shadow-2xl overflow-hidden min-w-[160px]"
+                className="absolute top-full mt-2 left-0 z-50 bg-[#161f35] border border-slate-700/50 rounded-lg shadow-2xl overflow-hidden min-w-[160px]"
               >
+                <button
+                  onClick={() => {
+                    onChange(getAllKeys(cat));
+                    setOpenSub(null);
+                  }}
+                  className={`w-full text-left px-4 py-2.5 text-sm transition-colors border-b border-slate-700/50 ${
+                    selected === getAllKeys(cat)
+                      ? "text-white bg-slate-700/50"
+                      : "text-slate-400 hover:text-white hover:bg-slate-700/30"
+                  }`}
+                >
+                  All
+                </button>
                 {cat.subs.map((sub) => (
                   <button
                     key={sub.key}
