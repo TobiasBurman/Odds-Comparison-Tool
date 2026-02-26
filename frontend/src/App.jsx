@@ -229,10 +229,12 @@ const App = () => {
             className="flex gap-14"
             columnClassName="space-y-10"
           >
-            {visibleMatches.map((match) => (
+            {visibleMatches.map((match, i) => (
               <MatchCard
                 key={match.id}
                 match={match}
+                index={i}
+                total={visibleMatches.length}
                 isExpanded={expandedMatchId === match.id}
                 onToggle={() =>
                   setExpandedMatchId((prev) => (prev === match.id ? null : match.id))

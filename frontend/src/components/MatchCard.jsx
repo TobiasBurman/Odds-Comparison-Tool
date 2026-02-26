@@ -3,7 +3,12 @@ import OddsDisplay from "./OddsDisplay";
 
 const cleanName = (title) => (title || "Unknown").replace(/\s*\(SE\)\s*/i, "").trim();
 
-const MatchCard = ({ match, isExpanded, onToggle }) => {
+const MatchCard = ({ match, isExpanded, onToggle, index = 0 }) => {
+  const t = (index % 3) / 2;
+  const r = Math.round(165 - 36 * t);
+  const g = Math.round(180 - 40 * t);
+  const b = Math.round(252 - 4 * t);
+  const titleColor = `rgb(${r}, ${g}, ${b})`;
   const getAllTeamOdds = (teamName) => {
     return match.bookmakers
       .map((b) => b.markets[0]?.outcomes.find((o) => o.name === teamName)?.price)
@@ -79,7 +84,7 @@ const MatchCard = ({ match, isExpanded, onToggle }) => {
       className="bg-[#0c1220] border border-slate-600/40 rounded-lg hover:border-slate-500 transition-colors duration-100"
     >
       <div className="px-4 pt-4 pb-3">
-        <p className="text-sm font-semibold text-white leading-snug">
+        <p className="text-sm font-semibold leading-snug" style={{ color: titleColor }}>
           {match.home_team} <span className="text-slate-600 font-normal">–</span> {match.away_team}
         </p>
         <span className={`text-[11px] tabular-nums mt-1 block ${isLive ? "text-emerald-500" : isSoon ? "text-amber-500" : "text-slate-600"}`}>
@@ -93,7 +98,7 @@ const MatchCard = ({ match, isExpanded, onToggle }) => {
           <div className="text-right ml-4 shrink-0">
             {bestHomeOdds ? (
               <>
-                <span className={`text-base font-bold font-mono tabular-nums ${homeIsValue ? "text-emerald-400" : "text-slate-100"}`}>
+                <span className={`text-base font-bold font-mono tabular-nums ${homeIsValue ? "text-emerald-400" : "text-slate-400"}`}>
                   {bestHomeOdds.toFixed(2)}
                 </span>
                 <p className="text-[10px] text-slate-600 leading-none mt-0.5">{cleanName(bestHomeBookie?.title)}</p>
@@ -109,7 +114,7 @@ const MatchCard = ({ match, isExpanded, onToggle }) => {
           <div className="text-right ml-4 shrink-0">
             {bestAwayOdds ? (
               <>
-                <span className={`text-base font-bold font-mono tabular-nums ${awayIsValue ? "text-emerald-400" : "text-slate-100"}`}>
+                <span className={`text-base font-bold font-mono tabular-nums ${awayIsValue ? "text-emerald-400" : "text-slate-400"}`}>
                   {bestAwayOdds.toFixed(2)}
                 </span>
                 <p className="text-[10px] text-slate-600 leading-none mt-0.5">{cleanName(bestAwayBookie?.title)}</p>
