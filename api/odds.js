@@ -70,7 +70,7 @@ async function fetchSport(sport) {
   return result;
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   const sportParam = req.query.sport || "icehockey_nhl";
   const sports = sportParam.split(",").map((s) => s.trim());
 
