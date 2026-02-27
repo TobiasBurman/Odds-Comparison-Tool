@@ -70,7 +70,7 @@ const App = () => {
 
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/odds?sport=${selectedSport}`
+          `/api/odds?sport=${selectedSport}`
         );
         const data = await res.json();
 
@@ -102,7 +102,7 @@ const App = () => {
     if (Notification.permission === "default") {
       Notification.requestPermission();
     }
-    fetch(`${import.meta.env.VITE_API_URL}/api/odds?sport=${ALL_SPORTS}`)
+    fetch(`/api/odds?sport=${ALL_SPORTS}`)
       .then((r) => r.json())
       .then((data) => { allMatchesRef.current = data; })
       .catch(() => {});
