@@ -9,7 +9,7 @@ import Masonry from "react-masonry-css";
 import MatchCard from "./components/MatchCard";
 import SportSelector from "./components/SportSelector";
 import FilterBar from "./components/FilterBar";
-import { Alert, AlertDescription } from "./components/ui/alert";
+import { Alert, AlertDescription } from "./components/ui/Alert";
 import logo from "./assets/odds.png";
 
 const getMatchMaxDeviation = (match) => {
